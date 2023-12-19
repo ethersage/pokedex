@@ -1,4 +1,9 @@
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  Action,
+  configureStore,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 
 interface Pokemon {} // Define the Pokemon interface as per your requirement
@@ -28,7 +33,6 @@ type SearchActions =
   | FulfillSearchAction
   | RejectSearchAction;
 
-// Create a slice for search functionality
 const searchSlice = createSlice({
   name: 'search',
   initialState,
@@ -49,7 +53,7 @@ const searchSlice = createSlice({
 });
 
 export const fetchPokemon =
-  (name: string): ThunkAction<void, SearchState, null, SearchActions> =>
+  (name: string): ThunkAction<void, SearchState, unknown, SearchActions> =>
   async (dispatch) => {
     dispatch(searchSlice.actions.startSearch(name));
     try {

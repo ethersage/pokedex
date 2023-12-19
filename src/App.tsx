@@ -1,8 +1,6 @@
 import "./App.css";
 import { SearchBar } from "./components/SearchBar";
 
-function App() {
+export function App() {
   return <SearchBar />;
 }
-
-export { App };

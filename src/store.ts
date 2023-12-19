@@ -48,7 +48,7 @@ const searchSlice = createSlice({
   },
 });
 
-const fetchPokemon =
+export const fetchPokemon =
   (name: string): ThunkAction<void, SearchState, null, SearchActions> =>
   async (dispatch) => {
     dispatch(searchSlice.actions.startSearch(name));
@@ -62,11 +62,8 @@ const fetchPokemon =
   };
 
 // Configure the store
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     search: searchSlice.reducer,
   },
 });
-
-export { fetchPokemon };
-export default store;

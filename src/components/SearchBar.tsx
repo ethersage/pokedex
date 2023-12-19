@@ -2,7 +2,7 @@ import "./SearchBar.css";
 
 function SearchBar() {
   return (
-    <input class="search-input" type="text" placeholder="Search pokemon" />
+    <input className="search-input" type="text" placeholder="Search pokemon" />
   );
 }
 

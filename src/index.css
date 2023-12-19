@@ -28,8 +28,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -61,6 +59,7 @@ button:focus-visible {
 input {
   background-color: #ccc;
   border-radius: 0.5rem;
+  box-sizing: border-box;
   color: black;
   font-size: 1rem;
   line-height: 2rem;

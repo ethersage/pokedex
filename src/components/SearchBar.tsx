@@ -18,14 +18,18 @@ export function SearchBar() {
 
   function onTermChanged(e: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
+
+    setShowHistory(e.target.value === '');
   }
 
-  function onInputFocus() {
+  function onInputActive() {
     onShowHistory();
   }
 
   function onInputBlur() {
-    setShowHistory(false);
+    setTimeout(() => {
+      setShowHistory(false);
+    }, 0);
   }
 
   function onSearch() {
@@ -34,6 +38,8 @@ export function SearchBar() {
     if (trimmed !== '') {
       // Unsure why I have to cast this and haven't had time to debug
       dispatch(fetchPokemon(trimmed.toLowerCase()) as unknown as UnknownAction);
+      setSearchTerm('');
+      setShowHistory(false);
     }
   }
 
@@ -58,8 +64,9 @@ export function SearchBar() {
           placeholder="Search Pokémon"
           value={searchTerm}
           onChange={onTermChanged}
-          onFocus={onInputFocus}
+          onFocus={onInputActive}
           onBlur={onInputBlur}
+          onClick={onInputActive}
         />
       </form>
       {showHistory && (

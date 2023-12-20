@@ -6,26 +6,27 @@ import {
 } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 
-interface Pokemon {} // Define the Pokemon interface as per your requirement
+interface Pokemon {
+  name: string;
+}
 
-// Define the state type
-interface SearchState {
-  history: Set<string>;
-  results: Pokemon[];
+export interface SearchState {
+  history: string[];
+  result: Pokemon | null;
   status: 'idle' | 'loading' | 'error';
   term: string;
 }
 
 // Initial State
 const initialState: SearchState = {
-  history: new Set(),
+  history: [],
   status: 'idle',
-  results: [],
+  result: null,
   term: '',
 };
 
 type StartSearchAction = PayloadAction<string>;
-type FulfillSearchAction = PayloadAction<Pokemon[]>;
+type FulfillSearchAction = PayloadAction<Pokemon>;
 type RejectSearchAction = PayloadAction;
 
 type SearchActions =
@@ -43,8 +44,8 @@ const searchSlice = createSlice({
     },
     fulfillSearch: (state, action: FulfillSearchAction) => {
       state.status = 'idle';
-      state.history.add(state.term);
-      state.results = action.payload;
+      state.history = Array.from(new Set([...state.history, state.term]));
+      state.result = action.payload;
     },
     rejectSearch: (state) => {
       state.status = 'error';
@@ -57,10 +58,15 @@ export const fetchPokemon =
   async (dispatch) => {
     dispatch(searchSlice.actions.startSearch(name));
     try {
+      console.log('before');
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      console.log('after');
       const pokemon = await response.json();
+      console.log('after json');
+      console.log(pokemon);
       dispatch(searchSlice.actions.fulfillSearch(pokemon));
     } catch (error) {
+      console.log(error);
       dispatch(searchSlice.actions.rejectSearch());
     }
   };

@@ -13,15 +13,24 @@ export function SearchBar() {
     setTerm(e.target.value);
   }
 
+  function onSearch(t: string) {
+    const trimmed = t.trim();
+
+    if (trimmed !== '') {
+      // Unsure why I have to cast this and haven't had time to debug
+      dispatch(fetchPokemon(trimmed.toLowerCase()) as unknown as UnknownAction);
+    }
+  }
+
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const t = term.trim();
+    onSearch(term);
+  }
 
-    if (t !== '') {
-      // Unsure why I have to cast this and haven't had time to debug
-      dispatch(fetchPokemon(t.toLowerCase()) as unknown as UnknownAction);
-    }
+  function onHistorySelected(t: string) {
+    console.log('searching for', t);
+    onSearch(t);
   }
 
   return (
@@ -37,7 +46,9 @@ export function SearchBar() {
       </form>
       <ul>
         {search.history.map((t) => (
-          <li>{t}</li>
+          <li key={t}>
+            <a onClick={() => onHistorySelected(t)}>{t}</a>
+          </li>
         ))}
       </ul>
     </>

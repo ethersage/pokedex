@@ -6,15 +6,30 @@ import { UnknownAction } from '@reduxjs/toolkit';
 
 export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showHistory, setShowHistory] = useState(false);
   const search = useSelector((state: { search: SearchState }) => state.search);
   const dispatch = useDispatch();
+
+  function onShowHistory() {
+    if (searchTerm.trim() === '') {
+      setShowHistory(true);
+    }
+  }
 
   function onTermChanged(e: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value);
   }
 
-  function onSearch(term: string) {
-    const trimmed = term.trim();
+  function onInputFocus() {
+    onShowHistory();
+  }
+
+  function onInputBlur() {
+    setShowHistory(false);
+  }
+
+  function onSearch() {
+    const trimmed = searchTerm.trim();
 
     if (trimmed !== '') {
       // Unsure why I have to cast this and haven't had time to debug
@@ -25,11 +40,13 @@ export function SearchBar() {
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    onSearch(searchTerm);
+    onSearch();
   }
 
   function onHistorySelected(term: string) {
-    onSearch(term);
+    setSearchTerm(term);
+
+    onSearch();
   }
 
   return (
@@ -41,15 +58,19 @@ export function SearchBar() {
           placeholder="Search Pokémon"
           value={searchTerm}
           onChange={onTermChanged}
+          onFocus={onInputFocus}
+          onBlur={onInputBlur}
         />
       </form>
-      <ul className="search-history">
-        {search.history.map((term) => (
-          <li key={term}>
-            <a onClick={() => onHistorySelected(term)}>{term}</a>
-          </li>
-        ))}
-      </ul>
+      {showHistory && (
+        <ul className="search-history">
+          {search.history.map((term) => (
+            <li key={term} onClick={() => onHistorySelected(term)}>
+              {term}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

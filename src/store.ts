@@ -1,13 +1,10 @@
-import {
-  Action,
-  configureStore,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
+import { apiResponseToPokemon, PokemonApiResponse } from './utils';
 
-interface Pokemon {
+export interface Pokemon {
   name: string;
+  imageUrl: string;
 }
 
 export interface SearchState {
@@ -58,13 +55,11 @@ export const fetchPokemon =
   async (dispatch) => {
     dispatch(searchSlice.actions.startSearch(name));
     try {
-      console.log('before');
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-      console.log('after');
-      const pokemon = await response.json();
-      console.log('after json');
-      console.log(pokemon);
-      dispatch(searchSlice.actions.fulfillSearch(pokemon));
+      const pokemon = (await response.json()) as PokemonApiResponse;
+      dispatch(
+        searchSlice.actions.fulfillSearch(apiResponseToPokemon(pokemon))
+      );
     } catch (error) {
       console.log(error);
       dispatch(searchSlice.actions.rejectSearch());

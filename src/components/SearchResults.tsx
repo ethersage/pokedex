@@ -14,7 +14,12 @@ export function SearchResults() {
     return 'loading';
   }
 
-  if (search.status === 'idle') {
-    return <h2>{search.result?.name}</h2>;
+  if (search.status === 'idle' && search.result !== null) {
+    return (
+      <>
+        <h2>{search.result.name}</h2>
+        <img src={search.result.imageUrl} alt={search.result.name} />
+      </>
+    );
   }
 }

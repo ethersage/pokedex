@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, KeyboardEventHandler, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchBar.css';
 import { useDispatch } from 'react-redux';
 import { fetchPokemon, store } from '../store';
@@ -18,6 +18,7 @@ export function SearchBar() {
     const t = term.trim();
 
     if (t !== '') {
+      // Unsure why I have to cast this and haven't had time to debug
       dispatch(fetchPokemon(t.toLowerCase()) as unknown as UnknownAction);
     }
   }

@@ -57,13 +57,18 @@ button:focus-visible {
 }
 
 input {
-  background-color: #ccc;
+  background-color: #ddd;
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: black;
   font-size: 1rem;
   line-height: 2rem;
   padding: 0.25rem 0.75rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 @media (prefers-color-scheme: light) {

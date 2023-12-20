@@ -33,7 +33,7 @@ export function SearchBar() {
   }
 
   return (
-    <>
+    <div className="search-bar">
       <form onSubmit={onSubmit}>
         <input
           className="search-input"
@@ -43,13 +43,13 @@ export function SearchBar() {
           onChange={onTermChanged}
         />
       </form>
-      <ul>
+      <ul className="search-history">
         {search.history.map((term) => (
           <li key={term}>
             <a onClick={() => onHistorySelected(term)}>{term}</a>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

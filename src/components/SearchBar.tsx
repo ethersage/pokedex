@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import './SearchBar.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchState, fetchPokemon, store } from '../store';
+import { SearchState, fetchPokemon } from '../store';
 import { UnknownAction } from '@reduxjs/toolkit';
 
 export function SearchBar() {
@@ -29,7 +29,6 @@ export function SearchBar() {
   }
 
   function onHistorySelected(term: string) {
-    console.log('searching for', term);
     onSearch(term);
   }
 

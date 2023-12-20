@@ -6,7 +6,7 @@ import { UnknownAction } from '@reduxjs/toolkit';
 
 export function SearchBar() {
   const [term, setTerm] = useState('');
-  const dispatch = useDispatch<typeof store.dispatch>();
+  const dispatch = useDispatch();
 
   function onTermChanged(e: ChangeEvent<HTMLInputElement>) {
     setTerm(e.target.value);

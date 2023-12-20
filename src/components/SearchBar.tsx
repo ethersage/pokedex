@@ -5,16 +5,16 @@ import { SearchState, fetchPokemon, store } from '../store';
 import { UnknownAction } from '@reduxjs/toolkit';
 
 export function SearchBar() {
-  const [term, setTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const search = useSelector((state: { search: SearchState }) => state.search);
   const dispatch = useDispatch();
 
   function onTermChanged(e: ChangeEvent<HTMLInputElement>) {
-    setTerm(e.target.value);
+    setSearchTerm(e.target.value);
   }
 
-  function onSearch(t: string) {
-    const trimmed = t.trim();
+  function onSearch(term: string) {
+    const trimmed = term.trim();
 
     if (trimmed !== '') {
       // Unsure why I have to cast this and haven't had time to debug
@@ -25,12 +25,12 @@ export function SearchBar() {
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    onSearch(term);
+    onSearch(searchTerm);
   }
 
-  function onHistorySelected(t: string) {
-    console.log('searching for', t);
-    onSearch(t);
+  function onHistorySelected(term: string) {
+    console.log('searching for', term);
+    onSearch(term);
   }
 
   return (
@@ -40,14 +40,14 @@ export function SearchBar() {
           className="search-input"
           type="text"
           placeholder="Search Pokémon"
-          value={term}
+          value={searchTerm}
           onChange={onTermChanged}
         />
       </form>
       <ul>
-        {search.history.map((t) => (
-          <li key={t}>
-            <a onClick={() => onHistorySelected(t)}>{t}</a>
+        {search.history.map((term) => (
+          <li key={term}>
+            <a onClick={() => onHistorySelected(term)}>{term}</a>
           </li>
         ))}
       </ul>

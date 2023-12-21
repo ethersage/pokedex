@@ -34,24 +34,49 @@ describe('search reducer', () => {
   });
 
   it('should handle fulfillSearch', () => {
-    const mockPokemon: Pokemon = { name: 'pikachu', imageUrl: 'imageUrl' };
+    const mockPokemonPikachu: Pokemon = {
+      name: 'pikachu',
+      imageUrl: 'imageUrl',
+    };
+
+    const mockPokemonCharmander: Pokemon = {
+      name: 'charmander',
+      imageUrl: 'imageUrl',
+    };
 
     const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
 
-    const state = searchSlice.reducer(
+    let state = searchSlice.reducer(
       { ...initialState, term: 'pikachu' },
-      searchSlice.actions.fulfillSearch(mockPokemon)
+      searchSlice.actions.fulfillSearch(mockPokemonPikachu)
     );
 
     expect(state).toEqual({
       ...initialState,
       history: ['pikachu'],
-      result: mockPokemon,
+      result: mockPokemonPikachu,
       status: 'idle',
       term: 'pikachu',
     });
 
     expect(localStorage.getItem(historyKey)).toEqual('["pikachu"]');
+
+    state = searchSlice.reducer(
+      { ...state, term: 'charmander' },
+      searchSlice.actions.fulfillSearch(mockPokemonCharmander)
+    );
+
+    expect(state).toEqual({
+      ...state,
+      history: ['charmander', 'pikachu'],
+      result: mockPokemonCharmander,
+      status: 'idle',
+      term: 'charmander',
+    });
+
+    expect(localStorage.getItem(historyKey)).toEqual(
+      '["charmander","pikachu"]'
+    );
   });
 
   it('should handle rejectSearch', () => {

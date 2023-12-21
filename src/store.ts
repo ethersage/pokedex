@@ -21,7 +21,9 @@ let history: string[] = [];
 try {
   const localHistory = localStorage.getItem(historyKey);
   history = localHistory === null ? [] : JSON.parse(localHistory);
-} catch (error) {}
+} catch (error) {
+  // do nothing
+}
 
 // Initial State
 const initialState: SearchState = {
@@ -55,7 +57,9 @@ const searchSlice = createSlice({
       // persist to localStorage
       try {
         localStorage.setItem(historyKey, JSON.stringify(state.history));
-      } catch (error) {}
+      } catch (error) {
+        // do nothing
+      }
 
       state.result = action.payload;
     },

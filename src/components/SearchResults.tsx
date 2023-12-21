@@ -20,15 +20,19 @@ export function SearchResults() {
   }
 
   if (search.status === 'loading') {
-    return 'loading';
+    return (
+      <div className="search-results">
+        <div className="spinner" />
+      </div>
+    );
   }
 
   if (search.status === 'idle' && search.result !== null) {
     return (
-      <>
+      <div className="searchResults">
         <h2>{upperName}</h2>
         <img src={search.result.imageUrl} alt={upperName} />
-      </>
+      </div>
     );
   }
 }

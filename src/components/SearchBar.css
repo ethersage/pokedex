@@ -28,3 +28,10 @@
 .search-history li:hover {
   background-color: #bbb;
 }
+
+.search-results {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 10rem;
+}

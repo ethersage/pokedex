@@ -17,3 +17,11 @@ export function apiResponseToPokemon(apiResponse: PokemonApiResponse): Pokemon {
     imageUrl: apiResponse.sprites.other['official-artwork']['front_default'],
   };
 }
+
+export async function delayPromise<T>(promise: Promise<T>, delay = 300) {
+  const wait = new Promise((resolve) => setTimeout(resolve, delay));
+
+  const finished = await Promise.all([wait, promise]);
+
+  return finished[1];
+}

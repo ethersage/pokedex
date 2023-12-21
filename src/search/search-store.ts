@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
-import { apiResponseToPokemon, PokemonApiResponse } from '../utils';
+import {
+  apiResponseToPokemon,
+  delayPromise,
+  PokemonApiResponse,
+} from '../utils';
 import { Pokemon } from './search-types';
 
 export interface SearchState {
@@ -76,12 +80,11 @@ export const fetchPokemon =
     dispatch(searchSlice.actions.startSearch(name));
 
     try {
-      const artificialWait = new Promise((resolve) => setTimeout(resolve, 300));
-      const responsePromise = fetch(
-        `https://pokeapi.co/api/v2/pokemon/${name}`
+      // UX studies show that a tiny delay on asynchronous actions is better
+      // than immediate results.
+      const response = await delayPromise(
+        fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
       );
-
-      const [, response] = await Promise.all([artificialWait, responsePromise]);
 
       if (response.status !== 200) {
         dispatch(searchSlice.actions.rejectSearch('Not found'));

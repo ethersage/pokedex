@@ -1,11 +1,7 @@
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 import { apiResponseToPokemon, PokemonApiResponse } from './utils';
-
-export interface Pokemon {
-  name: string;
-  imageUrl: string;
-}
+import { Pokemon } from './domain-types';
 
 export interface SearchState {
   error: string;

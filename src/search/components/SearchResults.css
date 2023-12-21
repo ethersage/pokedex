@@ -1,5 +1,22 @@
+.search-results-loading {
+  position: relative;
+}
+
+.search-results-spinner {
+  position: absolute;
+  left: 50%;
+  margin-left: -18px;
+  margin-top: 10rem;
+}
+
+.search-results img {
+  height: 475px;
+  width: 475px;
+}
+
 @media (max-width: 520px) {
   .search-results img {
+    height: 320px;
     width: 320px;
   }
 }

@@ -23,8 +23,8 @@ export function SearchResults() {
 
   if (search.status === 'loading') {
     return (
-      <div className="search-results">
-        <div className="spinner" />
+      <div className="search-results-loading">
+        <div className="spinner search-results-spinner" />
       </div>
     );
   }

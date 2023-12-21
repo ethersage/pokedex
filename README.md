@@ -2,6 +2,20 @@
 
 # Pokedex
 
+## Running the project
+
+First install:
+
+```
+npm install
+```
+
+Then run:
+
+```
+npm run dev
+```
+
 ## Considerations
 
 Where requirements are ambiguous, I use the following assumptions:

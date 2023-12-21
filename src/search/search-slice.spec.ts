@@ -37,10 +37,12 @@ describe('search reducer', () => {
     const mockPokemon: Pokemon = { name: 'pikachu', imageUrl: 'imageUrl' };
 
     const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
+
     const state = searchSlice.reducer(
       { ...initialState, term: 'pikachu' },
       searchSlice.actions.fulfillSearch(mockPokemon)
     );
+
     expect(state).toEqual({
       ...initialState,
       history: ['pikachu'],
@@ -54,14 +56,18 @@ describe('search reducer', () => {
 
   it('should handle rejectSearch', () => {
     const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
+
     const state = searchSlice.reducer(
       initialState,
       searchSlice.actions.rejectSearch('Error message')
     );
+
     expect(state).toEqual({
       ...initialState,
       status: 'error',
       error: 'Error message',
     });
+
+    expect(localStorage.getItem(historyKey)).toEqual(null);
   });
 });

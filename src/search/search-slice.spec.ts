@@ -1,7 +1,4 @@
-// import thunk from 'redux-thunk';
-// import configureMockStore from 'redux-mock-store';
-
-import { historyKey, searchSlice } from './search-slice'; // Adjust the import path
+import { historyKey, searchSlice } from './search-slice';
 import { Pokemon } from './search-types';
 
 const initialState = searchSlice.reducer(undefined, { type: 'unknown' });

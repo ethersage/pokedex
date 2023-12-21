@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { act } from 'react-dom/test-utils';
 
 import { SearchBar } from './SearchBar';
-import { SearchState } from '../search-slice'; // Adjust import path as needed
+import { SearchState } from '../search-slice';
 import { renderWithStore } from './SearchComponentTestUtils';
-import { act } from 'react-dom/test-utils';
 
 it('should display no history when input not focused', () => {
   const initialState: SearchState = {

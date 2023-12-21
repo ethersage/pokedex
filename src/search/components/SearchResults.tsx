@@ -1,7 +1,7 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { SearchState } from '../search-slice';
-import { useMemo } from 'react';
 
 import './SearchResults.css';
 

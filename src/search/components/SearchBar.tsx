@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import './SearchBar.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { SearchState, fetchPokemon } from '../search-store';
+import { SearchState, fetchPokemon } from '../search-slice';
 import { UnknownAction } from '@reduxjs/toolkit';
 
 export function SearchBar() {

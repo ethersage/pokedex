@@ -15,7 +15,7 @@ export interface SearchState {
   term: string;
 }
 
-const historyKey = 'search-history';
+export const historyKey = 'search-history';
 let history: string[] = [];
 
 // get inital history from localstorage

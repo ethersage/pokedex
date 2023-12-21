@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { SearchState } from '../search-store';
+import { SearchState } from '../search-slice';
 import { useMemo } from 'react';
 
 import './SearchResults.css';

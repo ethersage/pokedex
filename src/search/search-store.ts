@@ -76,7 +76,12 @@ export const fetchPokemon =
     dispatch(searchSlice.actions.startSearch(name));
 
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      const artificialWait = new Promise((resolve) => setTimeout(resolve, 300));
+      const responsePromise = fetch(
+        `https://pokeapi.co/api/v2/pokemon/${name}`
+      );
+
+      const [, response] = await Promise.all([artificialWait, responsePromise]);
 
       if (response.status !== 200) {
         dispatch(searchSlice.actions.rejectSearch('Not found'));

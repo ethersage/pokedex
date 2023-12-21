@@ -2,7 +2,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   min-height: 10rem;
 }
 
@@ -15,11 +15,6 @@
   left: 50%;
   margin-left: -18px;
   margin-top: 10rem;
-}
-
-.search-results img {
-  height: 475px;
-  width: 475px;
 }
 
 @media (max-width: 520px) {

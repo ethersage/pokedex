@@ -29,6 +29,8 @@ describe('search reducer', () => {
       status: 'loading',
       term: 'pikachu',
     });
+
+    expect(localStorage.getItem(historyKey)).toEqual(null);
   });
 
   it('should handle fulfillSearch', () => {

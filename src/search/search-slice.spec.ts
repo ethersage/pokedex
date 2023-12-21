@@ -1,5 +1,10 @@
+// import thunk from 'redux-thunk';
+// import configureMockStore from 'redux-mock-store';
+
 import { historyKey, searchSlice } from './search-slice'; // Adjust the import path
 import { Pokemon } from './search-types';
+
+const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
 
 describe('search reducer', () => {
   beforeEach(() => {
@@ -7,7 +12,7 @@ describe('search reducer', () => {
   });
 
   it('should handle initial state', () => {
-    expect(searchSlice.reducer(undefined, { type: 'unknown' })).toEqual({
+    expect(initialState).toEqual({
       error: '',
       history: [],
       result: null,
@@ -19,7 +24,6 @@ describe('search reducer', () => {
   });
 
   it('should handle startSearch', () => {
-    const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
     const state = searchSlice.reducer(
       initialState,
       searchSlice.actions.startSearch('pikachu')
@@ -43,8 +47,6 @@ describe('search reducer', () => {
       name: 'charmander',
       imageUrl: 'imageUrl',
     };
-
-    const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
 
     let state = searchSlice.reducer(
       { ...initialState, term: 'pikachu' },
@@ -80,8 +82,6 @@ describe('search reducer', () => {
   });
 
   it('should handle rejectSearch', () => {
-    const initialState = searchSlice.reducer(undefined, { type: 'unknown' });
-
     const state = searchSlice.reducer(
       initialState,
       searchSlice.actions.rejectSearch('Error message')
@@ -95,4 +95,29 @@ describe('search reducer', () => {
 
     expect(localStorage.getItem(historyKey)).toEqual(null);
   });
+
+  //   it('creates fulfillSearch when fetching Pokemon is successful', async () => {
+  //     // Mock the global fetch function
+  //     global.fetch = jest.fn(() =>
+  //       Promise.resolve({
+  //         json: () => Promise.resolve({ name: 'pikachu' /* other properties */ }),
+  //         status: 200,
+  //       })
+  //     );
+
+  //     const store = configureMockStore({ search: initialState });
+
+  //     await store.dispatch(fetchPokemon('pikachu'));
+
+  //     const actions = store.getActions();
+  //     expect(actions[0]).toEqual(searchSlice.actions.startSearch('pikachu'));
+  //     expect(actions[1].type).toBe('search/fulfillSearch');
+  //     expect(actions[1].payload).toEqual({
+  //       name: 'pikachu' /* other properties */,
+  //     });
+
+  //     // Clean up
+  //     global.fetch.mockClear();
+  //     delete global.fetch;
+  //   });
 });

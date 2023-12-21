@@ -2,8 +2,17 @@
   position: relative;
 }
 
-.search-input {
+.search-bar .search-form {
+  display: flex;
+  gap: 1rem;
+}
+
+.search-bar .search-form .search-input {
   width: 100%;
+}
+
+.search-bar .search-form .search-button {
+  background-color: var(--primary-color);
 }
 
 .search-history {

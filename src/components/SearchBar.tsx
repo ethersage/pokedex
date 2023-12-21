@@ -61,7 +61,7 @@ export function SearchBar() {
 
   return (
     <div className="search-bar">
-      <form onSubmit={onSubmit}>
+      <form className="search-form" onSubmit={onSubmit}>
         <input
           className="search-input"
           tabIndex={0}
@@ -74,6 +74,9 @@ export function SearchBar() {
           onBlur={onInputBlur}
           onClick={onInputActive}
         />
+        <button className="search-button" type="submit">
+          Search
+        </button>
       </form>
       {showHistory && (
         <ul className="search-history" tabIndex={1} ref={historyRef}>

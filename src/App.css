@@ -1,6 +1,7 @@
 :root {
   --background-color: #ddd;
   --border-radius: 0.5rem;
+  --primary-color: #555;
 }
 
 #root {

@@ -10,21 +10,21 @@ export function SearchResults() {
 
   const name = search.result?.name || '';
 
-  const upperName = useMemo(
+  // Perhaps overkill to use useMemo for this
+  const properName = useMemo(
     () =>
       name.length > 0 ? `${name[0].toUpperCase()}${name.substring(1)}` : '',
     [name]
   );
 
   if (search.status === 'error') {
-    // There could be other errors here, but we haven't accounted for that
     return <div className="search-results">{search.error}</div>;
   }
 
   if (search.status === 'loading') {
     return (
       <div className="search-results-loading">
-        <div className="spinner search-results-spinner" />
+        <div className="spinner" />
       </div>
     );
   }
@@ -32,8 +32,8 @@ export function SearchResults() {
   if (search.status === 'idle' && search.result !== null) {
     return (
       <div className="search-results">
-        <h2>{upperName}</h2>
-        <img src={search.result.imageUrl} alt={upperName} />
+        <h2>{properName}</h2>
+        <img src={search.result.imageUrl} alt={properName} />
       </div>
     );
   }

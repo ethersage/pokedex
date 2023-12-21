@@ -8,11 +8,11 @@ export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showHistory, setShowHistory] = useState(false);
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const historyRef = useRef<HTMLUListElement | null>(null);
-
   const search = useSelector((state: { search: SearchState }) => state.search);
   const dispatch = useDispatch();
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const historyRef = useRef<HTMLUListElement | null>(null);
 
   function onShowHistory() {
     if (searchTerm.trim() === '') {
@@ -26,18 +26,6 @@ export function SearchBar() {
     setShowHistory(e.target.value === '');
   }
 
-  function onInputActive() {
-    onShowHistory();
-  }
-
-  function onInputBlur() {
-    setTimeout(() => {
-      if (document.activeElement !== historyRef.current) {
-        setShowHistory(false);
-      }
-    }, 0);
-  }
-
   function onSearch(term: string = '') {
     const trimmed = term.trim();
 
@@ -49,6 +37,8 @@ export function SearchBar() {
     }
   }
 
+  // Form onSubmit so we can catch the enter key in the input or click of the search
+  // button
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -57,6 +47,23 @@ export function SearchBar() {
 
   function onHistorySelected(term: string) {
     onSearch(term);
+  }
+
+  function onInputActive() {
+    onShowHistory();
+  }
+
+  function onInputBlur() {
+    // setTimeout because we want to wait for the blur event (and document.activeElement)
+    // to complete before showing the history, otherwise when we try to click the history
+    // dropdown it disappears from the blur event before we can actually click it
+    setTimeout(() => {
+      // Only close history if the activeElement is outside the history dropdown,
+      // allowing us to leave the history open so we can click on one
+      if (document.activeElement !== historyRef.current) {
+        setShowHistory(false);
+      }
+    }, 0);
   }
 
   return (

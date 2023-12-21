@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.search-results-spinner {
+.search-results-loading .spinner {
   position: absolute;
   left: 50%;
   margin-left: -18px;

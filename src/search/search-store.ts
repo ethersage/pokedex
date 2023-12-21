@@ -19,7 +19,8 @@ try {
   const localHistory = localStorage.getItem(historyKey);
   history = localHistory === null ? [] : JSON.parse(localHistory);
 } catch (error) {
-  // do nothing
+  console.log(error);
+  // do nothing, we just won't have search history
 }
 
 // Initial State
@@ -57,6 +58,7 @@ export const searchSlice = createSlice({
         localStorage.setItem(historyKey, JSON.stringify(state.history));
       } catch (error) {
         console.error('Setting localStorage failed:', error);
+        // do nothing, we simply won't set the item to storage
       }
 
       state.result = action.payload;
@@ -72,6 +74,7 @@ export const fetchPokemon =
   (name: string): ThunkAction<void, SearchState, unknown, SearchActions> =>
   async (dispatch) => {
     dispatch(searchSlice.actions.startSearch(name));
+
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
 
@@ -81,6 +84,7 @@ export const fetchPokemon =
       }
 
       const pokemon = (await response.json()) as PokemonApiResponse;
+
       dispatch(
         searchSlice.actions.fulfillSearch(apiResponseToPokemon(pokemon))
       );
@@ -88,9 +92,10 @@ export const fetchPokemon =
       const message =
         error instanceof Error ? error.message : (error as string);
       console.error(message);
+
       dispatch(
         searchSlice.actions.rejectSearch(
-          'Oops. We encountered an error. Pleaes try again'
+          'Oops. We encountered an error. Please try again.'
         )
       );
     }

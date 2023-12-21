@@ -40,7 +40,7 @@ describe('SearchResults Component', () => {
 
     expect(screen.queryByText('Pikachu')).toBeNull();
     expect(screen.queryByRole('loader')).toBeNull();
-    expect(screen.queryByRole('image')).toBeNull();
+    expect(screen.queryByRole('img')).toBeNull();
   });
 
   it('should display loading spinner when status is loading', () => {
@@ -56,6 +56,8 @@ describe('SearchResults Component', () => {
     renderWithStore(store);
 
     expect(screen.getByRole('loader')).toHaveClass('spinner');
+    expect(screen.queryByText('Pikachu')).toBeNull();
+    expect(screen.queryByRole('img')).toBeNull();
   });
 
   it('should display error message when status is error', () => {
@@ -72,6 +74,8 @@ describe('SearchResults Component', () => {
     renderWithStore(store);
 
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
+    expect(screen.queryByText('Pikachu')).toBeNull();
+    expect(screen.queryByRole('loader')).toBeNull();
   });
 
   it('should display search results when status is idle and result is not null', () => {
@@ -92,5 +96,6 @@ describe('SearchResults Component', () => {
       'src',
       mockResult.imageUrl
     );
+    expect(screen.queryByRole('loader')).toBeNull();
   });
 });

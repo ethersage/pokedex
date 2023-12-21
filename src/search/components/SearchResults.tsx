@@ -37,7 +37,7 @@ export function SearchResults() {
     return (
       <div role="search-results" className="search-results">
         <h2>{properName}</h2>
-        <img role="image" src={search.result.imageUrl} alt={properName} />
+        <img src={search.result.imageUrl} alt={properName} />
       </div>
     );
   }

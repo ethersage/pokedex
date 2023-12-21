@@ -40,6 +40,7 @@ describe('SearchResults Component', () => {
 
     expect(screen.queryByText('Pikachu')).toBeNull();
     expect(screen.queryByRole('loader')).toBeNull();
+    expect(screen.queryByRole('image')).toBeNull();
   });
 
   it('should display loading spinner when status is loading', () => {

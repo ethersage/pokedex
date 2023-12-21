@@ -8,6 +8,7 @@ export interface Pokemon {
 }
 
 export interface SearchState {
+  error: string;
   history: string[];
   result: Pokemon | null;
   status: 'idle' | 'loading' | 'error';
@@ -27,6 +28,7 @@ try {
 
 // Initial State
 const initialState: SearchState = {
+  error: '',
   history: history,
   status: 'idle',
   result: null,
@@ -35,7 +37,7 @@ const initialState: SearchState = {
 
 type StartSearchAction = PayloadAction<string>;
 type FulfillSearchAction = PayloadAction<Pokemon>;
-type RejectSearchAction = PayloadAction;
+type RejectSearchAction = PayloadAction<string>;
 
 type SearchActions =
   | StartSearchAction
@@ -58,12 +60,13 @@ const searchSlice = createSlice({
       try {
         localStorage.setItem(historyKey, JSON.stringify(state.history));
       } catch (error) {
-        // do nothing
+        console.error('Setting localStorage failed:', error);
       }
 
       state.result = action.payload;
     },
-    rejectSearch: (state) => {
+    rejectSearch: (state, action: RejectSearchAction) => {
+      state.error = action.payload;
       state.status = 'error';
     },
   },
@@ -75,13 +78,25 @@ export const fetchPokemon =
     dispatch(searchSlice.actions.startSearch(name));
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+
+      if (response.status !== 200) {
+        dispatch(searchSlice.actions.rejectSearch('Not found'));
+        return;
+      }
+
       const pokemon = (await response.json()) as PokemonApiResponse;
       dispatch(
         searchSlice.actions.fulfillSearch(apiResponseToPokemon(pokemon))
       );
     } catch (error) {
-      console.log(error);
-      dispatch(searchSlice.actions.rejectSearch());
+      const message =
+        error instanceof Error ? error.message : (error as string);
+      console.error(message);
+      dispatch(
+        searchSlice.actions.rejectSearch(
+          'Oops. We encountered an error. Pleaes try again'
+        )
+      );
     }
   };
 

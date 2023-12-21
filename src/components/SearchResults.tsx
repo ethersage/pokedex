@@ -16,7 +16,7 @@ export function SearchResults() {
 
   if (search.status === 'error') {
     // There could be other errors here, but we haven't accounted for that
-    return 'Not found';
+    return <div className="search-results">{search.error}</div>;
   }
 
   if (search.status === 'loading') {
@@ -29,10 +29,10 @@ export function SearchResults() {
 
   if (search.status === 'idle' && search.result !== null) {
     return (
-      <div className="searchResults">
+      <>
         <h2>{upperName}</h2>
         <img src={search.result.imageUrl} alt={upperName} />
-      </div>
+      </>
     );
   }
 }

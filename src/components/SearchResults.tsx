@@ -5,11 +5,13 @@ import { useMemo } from 'react';
 
 export function SearchResults() {
   const search = useSelector((state: { search: SearchState }) => state.search);
+
   const name = search.result?.name || '';
+
   const upperName = useMemo(
     () =>
       name.length > 0 ? `${name[0].toUpperCase()}${name.substring(1)}` : '',
-    [search.result?.name]
+    [name]
   );
 
   if (search.status === 'error') {

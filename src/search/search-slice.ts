@@ -40,7 +40,7 @@ type StartSearchAction = PayloadAction<string>;
 type FulfillSearchAction = PayloadAction<Pokemon>;
 type RejectSearchAction = PayloadAction<string>;
 
-type SearchActions =
+export type SearchActions =
   | StartSearchAction
   | FulfillSearchAction
   | RejectSearchAction;

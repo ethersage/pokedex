@@ -95,29 +95,4 @@ describe('search reducer', () => {
 
     expect(localStorage.getItem(historyKey)).toEqual(null);
   });
-
-  //   it('creates fulfillSearch when fetching Pokemon is successful', async () => {
-  //     // Mock the global fetch function
-  //     global.fetch = jest.fn(() =>
-  //       Promise.resolve({
-  //         json: () => Promise.resolve({ name: 'pikachu' /* other properties */ }),
-  //         status: 200,
-  //       })
-  //     );
-
-  //     const store = configureMockStore({ search: initialState });
-
-  //     await store.dispatch(fetchPokemon('pikachu'));
-
-  //     const actions = store.getActions();
-  //     expect(actions[0]).toEqual(searchSlice.actions.startSearch('pikachu'));
-  //     expect(actions[1].type).toBe('search/fulfillSearch');
-  //     expect(actions[1].payload).toEqual({
-  //       name: 'pikachu' /* other properties */,
-  //     });
-
-  //     // Clean up
-  //     global.fetch.mockClear();
-  //     delete global.fetch;
-  //   });
 });

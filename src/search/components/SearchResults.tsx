@@ -18,20 +18,24 @@ export function SearchResults() {
   );
 
   if (search.status === 'error') {
-    return <div className="search-results">{search.error}</div>;
+    return (
+      <div role="search-results" className="search-results">
+        {search.error}
+      </div>
+    );
   }
 
   if (search.status === 'loading') {
     return (
       <div className="search-results-loading">
-        <div className="spinner" />
+        <div role="loader" className="spinner" />
       </div>
     );
   }
 
   if (search.status === 'idle' && search.result !== null) {
     return (
-      <div className="search-results">
+      <div role="search-results" className="search-results">
         <h2>{properName}</h2>
         <img src={search.result.imageUrl} alt={properName} />
       </div>

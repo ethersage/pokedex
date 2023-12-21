@@ -14,9 +14,18 @@ export interface SearchState {
   term: string;
 }
 
+const historyKey = 'search-history';
+let history: string[] = [];
+
+// get inital history from localstorage
+try {
+  const localHistory = localStorage.getItem(historyKey);
+  history = localHistory === null ? [] : JSON.parse(localHistory);
+} catch (error) {}
+
 // Initial State
 const initialState: SearchState = {
-  history: [],
+  history: history,
   status: 'idle',
   result: null,
   term: '',
@@ -42,6 +51,12 @@ const searchSlice = createSlice({
     fulfillSearch: (state, action: FulfillSearchAction) => {
       state.status = 'idle';
       state.history = Array.from(new Set([...state.history, state.term]));
+
+      // persist to localStorage
+      try {
+        localStorage.setItem(historyKey, JSON.stringify(state.history));
+      } catch (error) {}
+
       state.result = action.payload;
     },
     rejectSearch: (state) => {

@@ -1,4 +1,4 @@
-import { Pokemon } from './domain-types';
+import { Pokemon } from './search/search-types';
 
 export interface PokemonApiResponse {
   name: string;

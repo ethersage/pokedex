@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
 import { apiResponseToPokemon, PokemonApiResponse } from '../utils';
-import { Pokemon } from '../domain-types';
+import { Pokemon } from './search-types';
 
 export interface SearchState {
   error: string;

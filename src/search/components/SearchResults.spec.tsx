@@ -1,29 +1,9 @@
-import { Provider } from 'react-redux';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import configureMockStore from 'redux-mock-store';
-import { Action, Store } from 'redux';
 
 import { SearchResults } from './SearchResults';
 import { SearchState } from '../search-slice'; // Adjust import path as needed
-
-const mockStore = configureMockStore<RootState, Action>();
-
-interface RootState {
-  search: SearchState;
-}
-
-function createMockStore(state: SearchState) {
-  return mockStore({ search: state }) as unknown as Store<RootState, Action>;
-}
-
-function renderWithStore(store: Store<RootState, Action>) {
-  render(
-    <Provider store={store}>
-      <SearchResults />
-    </Provider>
-  );
-}
+import { renderWithStore } from './SearchComponentTestUtils';
 
 describe('SearchResults Component', () => {
   it('should display nothing when no results', () => {
@@ -35,8 +15,7 @@ describe('SearchResults Component', () => {
       term: 'Pikachu',
     };
 
-    const store = createMockStore(initialState);
-    renderWithStore(store);
+    renderWithStore(initialState, <SearchResults />);
 
     expect(screen.queryByText('Pikachu')).toBeNull();
     expect(screen.queryByRole('loader')).toBeNull();
@@ -52,8 +31,7 @@ describe('SearchResults Component', () => {
       term: '',
     };
 
-    const store = createMockStore(initialState);
-    renderWithStore(store);
+    renderWithStore(initialState, <SearchResults />);
 
     expect(screen.getByRole('loader')).toHaveClass('spinner');
     expect(screen.queryByText('Pikachu')).toBeNull();
@@ -70,8 +48,7 @@ describe('SearchResults Component', () => {
       term: 'pikachu',
     };
 
-    const store = createMockStore(initialState);
-    renderWithStore(store);
+    renderWithStore(initialState, <SearchResults />);
 
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
     expect(screen.queryByText('Pikachu')).toBeNull();
@@ -88,8 +65,7 @@ describe('SearchResults Component', () => {
       term: '',
     };
 
-    const store = createMockStore(initialState);
-    renderWithStore(store);
+    renderWithStore(initialState, <SearchResults />);
 
     expect(screen.getByText('Pikachu')).toBeInTheDocument();
     expect(screen.getByRole('img', { name: 'Pikachu' })).toHaveAttribute(

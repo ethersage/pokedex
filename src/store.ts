@@ -54,7 +54,7 @@ const searchSlice = createSlice({
     },
     fulfillSearch: (state, action: FulfillSearchAction) => {
       state.status = 'idle';
-      state.history = Array.from(new Set([...state.history, state.term]));
+      state.history = Array.from(new Set([state.term, ...state.history]));
 
       // persist to localStorage
       try {

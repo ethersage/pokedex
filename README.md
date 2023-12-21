@@ -1,3 +1,5 @@
+[![CI](https://github.com/ethersage/pokedex/actions/workflows/ci.yml/badge.svg)](https://github.com/ethersage/pokedex/actions/workflows/ci.yml)
+
 # Pokedex
 
 ## Considerations

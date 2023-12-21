@@ -15,7 +15,7 @@ export function SearchBar() {
   const historyRef = useRef<HTMLUListElement | null>(null);
 
   function onShowHistory() {
-    if (searchTerm.trim() === '') {
+    if (searchTerm.trim() === '' && search.history.length > 0) {
       setShowHistory(true);
     }
   }
@@ -70,6 +70,7 @@ export function SearchBar() {
     <div className="search-bar">
       <form className="search-form" onSubmit={onSubmit}>
         <input
+          role="search"
           className="search-input"
           tabIndex={0}
           ref={inputRef}
@@ -86,7 +87,12 @@ export function SearchBar() {
         </button>
       </form>
       {showHistory && (
-        <ul className="search-history" tabIndex={1} ref={historyRef}>
+        <ul
+          role="history"
+          className="search-history"
+          tabIndex={1}
+          ref={historyRef}
+        >
           {search.history.map((term) => (
             <li key={term} onClick={() => onHistorySelected(term)}>
               {term}
